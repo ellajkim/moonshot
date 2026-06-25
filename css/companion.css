@@ -1,0 +1,70 @@
+/* css/companion.css — tamagotchi card */
+
+.companion {
+  background: rgba(255, 255, 255, .04);
+  border: .5px solid rgba(255, 255, 255, .08);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+}
+
+.tama-level {
+  font-size: 10px;
+  color: #505878;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 8px;
+}
+
+.tama-svg-el {
+  width: 72px; height: 72px;
+  margin: 0 auto 8px;
+  display: block;
+}
+
+.sbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.sbar-track {
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, .07);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.sbar-fill {
+  height: 100%;
+  background: #3858c0;
+  border-radius: 2px;
+  transition: width .5s ease;
+  width: 0%;
+}
+
+.sbar-pct {
+  font-size: 10px;
+  color: #404870;
+  min-width: 26px;
+  text-align: right;
+}
+
+.speech {
+  background: rgba(80, 100, 255, .1);
+  border: .5px solid rgba(80, 100, 255, .2);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 11px;
+  color: #8898c8;
+  line-height: 1.5;
+  text-align: left;
+  min-height: 48px;
+}
+
+.speech b {
+  color: #a8c0ff;
+  font-weight: 500;
+}

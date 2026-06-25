@@ -1,0 +1,80 @@
+/* css/skills.css — donut chart section */
+
+.skills-section {
+  background: rgba(255, 255, 255, .03);
+  border: .5px solid rgba(255, 255, 255, .07);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 18px;
+}
+
+.skills-header {
+  font-size: 10px;
+  color: #505878;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 14px;
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.donut-wrap {
+  position: relative;
+  width: 60px; height: 60px;
+}
+
+.donut-wrap svg {
+  width: 60px; height: 60px;
+  transform: rotate(-90deg);
+}
+
+.donut-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, .07);
+  stroke-width: 5;
+}
+
+.donut-fg {
+  fill: none;
+  stroke-width: 5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset .7s cubic-bezier(.4, 0, .2, 1), stroke .4s;
+}
+
+.donut-label {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  font-weight: 500;
+  color: #c0d0ff;
+  white-space: nowrap;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.donut-label span {
+  display: block;
+  font-size: 9px;
+  font-weight: 400;
+  color: #505878;
+}
+
+.skill-name {
+  font-size: 10px;
+  color: #607098;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}

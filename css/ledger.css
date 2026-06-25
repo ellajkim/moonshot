@@ -1,0 +1,61 @@
+/* css/ledger.css — journey log card */
+
+.ledger-card {
+  background: rgba(255, 255, 255, .04);
+  border: .5px solid rgba(255, 255, 255, .08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  max-height: 280px;
+  overflow-y: auto;
+}
+
+.ledger-card::-webkit-scrollbar { width: 3px; }
+.ledger-card::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, .1);
+  border-radius: 2px;
+}
+
+.ledger-ttl {
+  font-size: 10px;
+  color: #404868;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 8px;
+}
+
+.lentry {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: .5px solid rgba(255, 255, 255, .05);
+}
+
+.lentry:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.lm {
+  font-size: 11px;
+  color: #7090d0;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 3px;
+}
+
+.ldot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.ltodo {
+  font-size: 10px;
+  color: #404868;
+  line-height: 1.4;
+  padding-left: 10px;
+}
+
+.ltodo span { color: #505888; }
