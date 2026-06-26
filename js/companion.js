@@ -2,10 +2,7 @@
 // Depends on: data.js (EVENTS)
 
 const CompanionModule = (() => {
-  const LEVELS = [
-    'Egg', 'Hatchling', 'Fledgling', 'Explorer', 'Builder',
-    'Achiever', 'Pro', 'Expert', 'Veteran', 'Master', 'Legend', 'Champion',
-  ];
+  const LEVELS = Array(12).fill('Moo - your companion');
 
   // Levels 0-5: babycow, levels 6-11: cow
   const COW_SWITCH = 6;
