@@ -24,7 +24,11 @@
   const line3El = document.createElement('div');
   line3El.className = 'intro-line';
 
-  overlay.append(moonImg, titleEl, line1El, line2El, line3El);
+  const skipBtn = document.createElement('button');
+  skipBtn.id = 'intro-skip';
+  skipBtn.textContent = 'skip >';
+
+  overlay.append(moonImg, titleEl, line1El, line2El, line3El, skipBtn);
   document.body.appendChild(overlay);
 
   // Cow lives outside the overlay so it can float above everything
@@ -181,6 +185,7 @@
   }
 
   function exitIntro() {
+    skipBtn.style.display = 'none';
     overlay.style.transition = 'opacity 0.8s ease';
     overlay.style.opacity = '0';
     cow.style.transition = 'opacity 0.8s ease';
@@ -190,4 +195,6 @@
       cow.remove();
     }, 800);
   }
+
+  skipBtn.addEventListener('click', exitIntro);
 })();

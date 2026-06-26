@@ -56,3 +56,24 @@
   pointer-events: none;
   z-index: 1;
 }
+
+#intro-skip {
+  position: absolute;
+  bottom: 24px;
+  right: 28px;
+  font-family: 'Silkscreen', monospace;
+  font-size: 14px;
+  color: #b8c8f0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.55;
+  z-index: 10001;
+  padding: 0;
+  letter-spacing: 0.04em;
+  transition: opacity 0.2s ease;
+}
+
+#intro-skip:hover {
+  opacity: 1;
+}
