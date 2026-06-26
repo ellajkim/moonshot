@@ -532,6 +532,14 @@ const EntryFormModule = (() => {
       targetIdx     = insertChronologically(newEvent);
       hintMsg       = deltaVal >= 0 ? '✓ Entry logged.' : '✓ Setback logged.';
       shouldPersist = true;
+
+      // Check the new entry's text against active goals (new entries only —
+      // edits don't re-trigger goal matching). Pass targetIdx explicitly so
+      // the goal-completion star lands on this event even if it was
+      // backdated and inserted earlier in the EVENTS array.
+      if (typeof GoalsModule !== 'undefined') {
+        GoalsModule.checkEntry(titleVal + ' ' + descVal, targetIdx);
+      }
     }
 
     // Write to data.js if linked, otherwise fall back to localStorage
