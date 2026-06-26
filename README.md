@@ -1,7 +1,6 @@
 # Moonshot 🌙
 
 > *"Shoot for the moon. Even if you miss, you'll land among the stars."*
-> *And if the arc dips along the way — those dips? That's where the real learning lives.*
 
 ---
 

@@ -515,6 +515,13 @@ const GitHubModule = (() => {
           </svg>
           <span id="gh-toggle-label">Import from GitHub</span>
         </button>
+        <button type="button" id="gh-download" class="gh-download-btn"
+                title="Download ledger.js — add as a script tag to import your data">
+          <svg viewBox="0 0 16 16" width="14" height="14" fill="none">
+            <path d="M8 2v8m0 0L5 7m3 3l3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M3 13h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </button>
 
         <div class="gh-panel" id="gh-panel">
           <div class="gh-fields">
@@ -543,11 +550,16 @@ const GitHubModule = (() => {
 
     let isOpen = false;
     document.getElementById('gh-toggle').addEventListener('click', () => {
+      const efPanel = document.getElementById('ef-panel');
+      if (efPanel && efPanel.classList.contains('ef-panel-open')) {
+        document.getElementById('ef-toggle').click();
+      }
       isOpen = !isOpen;
       document.getElementById('gh-panel').classList.toggle('gh-panel-open', isOpen);
       document.getElementById('gh-toggle-label').textContent = isOpen ? 'Close GitHub Import' : 'Import from GitHub';
     });
 
+    document.getElementById('gh-download').addEventListener('click', () => EntryFormModule.downloadLedgerJS());
     document.getElementById('gh-fetch-btn').addEventListener('click', handleFetch);
     document.getElementById('gh-username').addEventListener('keydown', e => { if (e.key === 'Enter') handleFetch(); });
     document.getElementById('gh-token').addEventListener('keydown',    e => { if (e.key === 'Enter') handleFetch(); });

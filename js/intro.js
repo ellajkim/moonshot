@@ -1,8 +1,14 @@
 (function () {
   'use strict';
 
-  const CHAR_MS = 135;
-  const PHASE_PAUSE = 950;  // ms pause between typed lines
+  const FAST_MODE = true;
+
+  const CHAR_MS    = FAST_MODE ? 40   : 135;
+  const PHASE_PAUSE = FAST_MODE ? 300  : 950;
+  const LOAD_DELAY  = FAST_MODE ? 200  : 700;
+  const START_DELAY = FAST_MODE ? 400  : 1400;
+  const STAR_INTERVAL = FAST_MODE ? 200 : 520;
+  const EXIT_DELAY  = FAST_MODE ? 1200 : 3500;
 
   // --- Build overlay ---
   const overlay = document.createElement('div');
@@ -43,7 +49,7 @@
   function maybeStart() {
     if (!started && moonImg.complete && cow.complete) {
       started = true;
-      setTimeout(run, 700);
+      setTimeout(run, LOAD_DELAY);
     }
   }
   moonImg.addEventListener('load',  maybeStart);
@@ -141,19 +147,19 @@
               const starTimer = setInterval(() => {
                   const n = 2 + Math.floor(Math.random() * 3); // 2–4 stars per burst
                   for (let i = 0; i < n; i++) addStar();
-                }, 520);
+                }, STAR_INTERVAL);
 
               setTimeout(() => {
                 // Phase 3: "You'll land among the stars"
                 type(line3El, T3, d3, () => {
                   clearInterval(starTimer);
-                  setTimeout(exitIntro, 3500);
+                  setTimeout(exitIntro, EXIT_DELAY);
                 });
               }, PHASE_PAUSE);
             });
           }, PHASE_PAUSE);
         });
-      }, 1400);
+      }, START_DELAY);
     });
   }
 

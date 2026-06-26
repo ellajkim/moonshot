@@ -46,13 +46,14 @@
     <div class="hdr">
       <img class="hdr-cow" src="images/cow.png" alt="">
       <div class="hdr-title">Moonshot</div>
-      <div class="score-pill" id="score-pill">Score: 0</div>
-    </div>
+      <div class="score-pill" id="score-pill" style="display:none">Score: 0</div>
+</div>
 
-    <!-- Entry form: "What have you been up to?" -->
-    <div id="entry-form-mount"></div>
-    <!-- GitHub activity importer -->
-    <div id="github-import-mount"></div>
+    <!-- Entry form + GitHub importer (same row, mutually exclusive panels) -->
+    <div id="import-row">
+      <div id="entry-form-mount"></div>
+      <div id="github-import-mount"></div>
+    </div>
     <!-- LinkedIn positions importer -->
     <div id="linkedin-import-mount"></div>
 

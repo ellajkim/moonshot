@@ -145,6 +145,15 @@ const TimelineModule = (() => {
     const row = document.getElementById('tick-row');
     row.innerHTML = '';
 
+    // The SVG uses preserveAspectRatio="xMidYMid meet" with a fixed 240px height.
+    // When the container is wider than the 480px viewBox, the content is centered
+    // with horizontal margins. Measure those margins so ticks land on the same
+    // pixel as their corresponding dots.
+    const svgEl  = document.getElementById('svg-timeline');
+    const svgW   = svgEl.getBoundingClientRect().width || W;
+    const scale  = Math.min(svgW / W, 1);       // uniform scale (height never exceeds 240)
+    const padX   = (svgW - W * scale) / 2;      // letterbox margin on each side
+
     let cur = new Date(minT);
     cur = new Date(Date.UTC(cur.getUTCFullYear(), cur.getUTCMonth(), 1));
     const end = new Date(maxT);
@@ -152,7 +161,7 @@ const TimelineModule = (() => {
     while (cur.getTime() <= end.getTime()) {
       const t       = cur.getTime();
       const svgX    = PL + ((t - minT) / range) * (W - PL - PR);
-      const leftPct = (svgX / W) * 100;
+      const leftPct = ((padX + svgX * scale) / svgW) * 100;
       const mo      = cur.getUTCMonth();
       const label   = mo === 0
         ? `Jan '${String(cur.getUTCFullYear()).slice(2)}`

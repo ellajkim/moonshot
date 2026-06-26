@@ -6,89 +6,6 @@ const EntryFormModule = (() => {
 
   let _addedSkills = [];
   let _editIdx     = null;   // null = new entry, number = editing EVENTS[_editIdx]
-  let _fileHandle  = null;   // FileSystemFileHandle for data.js (File System Access API)
-
-  // ── File System Access API ───────────────────────────────────────────────────
-
-  async function linkDataFile() {
-    if (!window.showOpenFilePicker) {
-      updateLinkStatus('unsupported');
-      return;
-    }
-    try {
-      const [handle] = await window.showOpenFilePicker({
-        types: [{ description: 'JavaScript files', accept: { 'text/javascript': ['.js'] } }],
-        multiple: false,
-      });
-      const perm = await handle.requestPermission({ mode: 'readwrite' });
-      if (perm === 'granted') {
-        _fileHandle = handle;
-        updateLinkStatus('linked');
-      }
-    } catch (e) {
-      // User cancelled the picker — do nothing
-    }
-  }
-
-  // Writes the full EVENTS array back into the linked data.js file,
-  // replacing the `const EVENTS = [...];` block in place.
-  async function writeToDataFile() {
-    if (!_fileHandle) return false;
-    try {
-      const file = await _fileHandle.getFile();
-      const text = await file.text();
-
-      const clean = EVENTS.map(ev => {
-        const c = Object.assign({}, ev);
-        delete c._custom;
-        return c;
-      });
-
-      const eventsStr = 'const EVENTS = ' + JSON.stringify(clean, null, 2) + ';';
-
-      const startMarker = 'const EVENTS = [';
-      const startIdx    = text.indexOf(startMarker);
-      const endStr      = '\n];';
-      const endIdx      = text.lastIndexOf(endStr);
-      if (startIdx === -1 || endIdx === -1) return false;
-
-      const newText = text.slice(0, startIdx) + eventsStr + text.slice(endIdx + endStr.length);
-
-      const writable = await _fileHandle.createWritable();
-      await writable.write(newText);
-      await writable.close();
-
-      // All events now live in data.js — clear custom flags and localStorage
-      EVENTS.forEach(ev => delete ev._custom);
-      try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
-
-      return true;
-    } catch (e) {
-      console.warn('EntryFormModule: could not write to data file:', e);
-      return false;
-    }
-  }
-
-  function updateLinkStatus(state) {
-    const btn   = document.getElementById('ef-link-btn');
-    const label = document.getElementById('ef-link-label');
-    if (!btn || !label) return;
-
-    btn.classList.remove('ef-link-btn-linked', 'ef-link-btn-error');
-
-    if (state === 'linked' && _fileHandle) {
-      label.textContent = _fileHandle.name;
-      btn.classList.add('ef-link-btn-linked');
-      btn.title = `Linked to ${_fileHandle.name} — submits write directly to this file`;
-    } else if (state === 'unsupported') {
-      label.textContent = 'Not supported';
-      btn.classList.add('ef-link-btn-error');
-      btn.title = 'File System Access API requires Chrome or Edge';
-    } else {
-      label.textContent = 'Link data.js';
-      btn.title = 'Link your data.js so entries are saved directly to it';
-    }
-  }
 
   // ── Persistence (localStorage fallback) ─────────────────────────────────────
 
@@ -357,23 +274,6 @@ const EntryFormModule = (() => {
             <div class="ef-actions">
               <button type="submit" class="ef-go">Log Entry</button>
               <button type="button" id="ef-delete-btn" class="ef-delete-btn" style="display:none">Delete</button>
-              <button type="button" id="ef-link-btn" class="ef-link-btn"
-                      title="Link your data.js so entries are saved directly to it">
-                <svg viewBox="0 0 16 16" width="12" height="12" fill="none">
-                  <path d="M6.5 9.5a3.5 3.5 0 0 0 5 0l2-2a3.5 3.5 0 0 0-5-5L7 4"
-                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                  <path d="M9.5 6.5a3.5 3.5 0 0 0-5 0l-2 2a3.5 3.5 0 0 0 5 5L9 12"
-                        stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-                <span id="ef-link-label">Link data.js</span>
-              </button>
-              <button type="button" id="ef-download" class="ef-icon-btn" title="Download ledger.json">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none">
-                  <path d="M12 3v12m0 0l-4.5-4.5M12 15l4.5-4.5" stroke="currentColor" stroke-width="1.6"
-                        stroke-linecap="round" stroke-linejoin="round"/>
-                  <path d="M5 19h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-                </svg>
-              </button>
             </div>
 
           </form>
@@ -386,6 +286,10 @@ const EntryFormModule = (() => {
     // Toggle open / close
     let isOpen = false;
     document.getElementById('ef-toggle').addEventListener('click', () => {
+      const ghPanel = document.getElementById('gh-panel');
+      if (ghPanel && ghPanel.classList.contains('gh-panel-open')) {
+        document.getElementById('gh-toggle').click();
+      }
       isOpen = !isOpen;
       document.getElementById('ef-panel').classList.toggle('ef-panel-open', isOpen);
       const vLine = document.getElementById('ef-toggle-svg').querySelector('line:first-child');
@@ -410,26 +314,19 @@ const EntryFormModule = (() => {
     });
     document.addEventListener('click', () => { dropdown.style.display = 'none'; });
 
-    // Link data.js button
-    document.getElementById('ef-link-btn').addEventListener('click', () => linkDataFile());
-    // Restore linked state label if handle already set (re-render after navigation)
-    if (_fileHandle) updateLinkStatus('linked');
-
     document.getElementById('ef-form').addEventListener('submit', handleSubmit);
-    document.getElementById('ef-download').addEventListener('click', downloadJSON);
     document.getElementById('ef-delete-btn').addEventListener('click', handleDelete);
   }
 
   // ── Delete ────────────────────────────────────────────────────────────────────
 
-  async function handleDelete() {
+  function handleDelete() {
     if (_editIdx === null) return;
 
     EVENTS.splice(_editIdx, 1);
     _editIdx = null;
 
-    const savedToFile = await writeToDataFile();
-    if (!savedToFile) persist();
+    persist();
 
     const submitBtn = document.querySelector('#ef-form .ef-go');
     if (submitBtn) submitBtn.textContent = 'Log Entry';
@@ -542,9 +439,7 @@ const EntryFormModule = (() => {
       }
     }
 
-    // Write to data.js if linked, otherwise fall back to localStorage
-    const savedToFile = await writeToDataFile();
-    if (!savedToFile && shouldPersist) persist();
+    if (shouldPersist) persist();
 
     if (window.rerenderAll) {
       window.rerenderAll(targetIdx);
@@ -568,24 +463,32 @@ const EntryFormModule = (() => {
 
     const hint = document.getElementById('ef-hint');
     if (hint) {
-      hint.textContent = savedToFile ? '✓ Saved to data.js.' : hintMsg;
+      hint.textContent = hintMsg;
       setTimeout(() => { if (hint) hint.textContent = ''; }, 3000);
     }
   }
 
   // ── Download ──────────────────────────────────────────────────────────────────
 
-  function downloadJSON() {
-    const exportData = EVENTS.map(ev => {
-      const clean = Object.assign({}, ev);
-      delete clean._custom;
-      return clean;
+  function downloadLedgerJS() {
+    const cleanEvents = EVENTS.map(ev => {
+      const c = Object.assign({}, ev);
+      delete c._custom;
+      return c;
     });
-    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+
+    const content =
+      `// ledger.js — generated by Moonshot on ${new Date().toISOString().slice(0, 10)}\n` +
+      `// To use: replace <script src="js/data.js"> with <script src="ledger.js"> in index.html\n\n` +
+      `const SKILL_MAX = ${SKILL_MAX};\n\n` +
+      `const SKILLS = ${JSON.stringify(SKILLS, null, 2)};\n\n` +
+      `const EVENTS = ${JSON.stringify(cleanEvents, null, 2)};\n`;
+
+    const blob = new Blob([content], { type: 'text/javascript' });
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement('a');
     a.href = url;
-    a.download = 'ledger.json';
+    a.download = 'ledger.js';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -608,13 +511,12 @@ const EntryFormModule = (() => {
       lastIdx = insertChronologically(ev);
     });
 
-    const savedToFile = await writeToDataFile();
-    if (!savedToFile) persist();
+    persist();
 
     if (window.rerenderAll) window.rerenderAll(lastIdx);
 
     return lastIdx;
   }
 
-  return { render, loadSavedEntries, openEdit, addBulk };
+  return { render, loadSavedEntries, openEdit, addBulk, downloadLedgerJS };
 })();

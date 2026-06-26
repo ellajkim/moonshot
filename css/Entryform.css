@@ -3,6 +3,8 @@
 /* ── Container & toggle ────────────────────────────────────────────────────── */
 
 .ef-container {
+  position: relative;
+  display: inline-block;
   margin-bottom: 18px;
 }
 
@@ -19,7 +21,6 @@
   color: #90a8ff;
   cursor: pointer;
   font-family: inherit;
-  margin-bottom: 10px;
   transition: background .15s, border-color .15s;
 }
 
@@ -35,7 +36,12 @@
 /* ── Collapsible panel ─────────────────────────────────────────────────────── */
 
 .ef-panel {
-  background: rgba(8, 12, 24, .82);
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 100;
+  width: 460px;
+  background: rgba(8, 12, 24, .97);
   border: .5px solid rgba(255, 255, 255, .13);
   border-radius: 14px;
   max-height: 0;

@@ -24,7 +24,7 @@
 /* ── Toggle button ─────────────────────────────────────────────────────────── */
 
 .li-container {
-  margin-bottom: 10px;
+  margin-bottom: 0;
   display: inline-block;
 }
 
@@ -41,7 +41,7 @@
   color: #8090b0;
   cursor: pointer;
   font-family: inherit;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   transition: background .15s, color .15s, border-color .15s;
 }
 

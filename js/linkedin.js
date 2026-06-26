@@ -222,8 +222,8 @@ const LinkedInModule = (() => {
     load();
 
     mount.innerHTML = `
-      <div class="li-container">
-        <button class="li-toggle" id="li-toggle" type="button">
+      <div class="li-container" style="display:none">
+        <button class="li-toggle" id="li-toggle" type="button" style="display:none">
           + Add career positions
         </button>
 

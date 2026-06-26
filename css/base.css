@@ -34,6 +34,13 @@ body {
   margin: 0 auto;
 }
 
+/* Import row: entry form + GitHub side-by-side */
+#import-row {
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+
 /* Header */
 .hdr {
   display: flex;
