@@ -1,5 +1,5 @@
 // js/Entryform.js — rich entry form for logging new events
-// Depends on: data.js (SKILLS, EVENTS), app.js (window.rerenderAll)
+// Depends on: data.js (SKILLS, EVENTS), app.js (window.rerenderAll), autofill.js (AutofillModule)
 
 const EntryFormModule = (() => {
   const STORAGE_KEY = 'psl_custom_entries';
@@ -282,6 +282,13 @@ const EntryFormModule = (() => {
     panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
+  // ── Autofill ──────────────────────────────────────────────────────────────────
+
+  function getAutoFields(title, desc, delta, skillDeltas) {
+    if (typeof AutofillModule === 'undefined') return null;
+    return AutofillModule.generate(title, desc, delta, skillDeltas);
+  }
+
   // ── Render ────────────────────────────────────────────────────────────────────
 
   function render() {
@@ -470,6 +477,8 @@ const EntryFormModule = (() => {
     const skillDeltas = {};
     _addedSkills.forEach(s => { skillDeltas[s.key] = s.delta; });
 
+    const aiFields = getAutoFields(titleVal, descVal, deltaVal, skillDeltas);
+
     let targetIdx;
     let hintMsg;
     let shouldPersist = false;
@@ -486,29 +495,35 @@ const EntryFormModule = (() => {
       ev.positive     = deltaVal >= 0;
       ev.goalAchieved = goalChecked && goalText ? goalText : null;
       ev.skillDeltas  = skillDeltas;
+      if (aiFields) {
+        ev.label     = aiFields.label     || ev.label;
+        ev.speech    = aiFields.speech    || ev.speech;
+        ev.milestone = aiFields.milestone || ev.milestone;
+        ev.todo      = aiFields.todo      || ev.todo;
+      }
       EVENTS.splice(_editIdx, 1);
       targetIdx = insertChronologically(ev);
       _editIdx  = null;
       hintMsg   = '✓ Entry updated.';
 
-      const submitBtn = document.querySelector('#ef-form .ef-go');
-      if (submitBtn) submitBtn.textContent = 'Log Entry';
+      const sBtn = document.querySelector('#ef-form .ef-go');
+      if (sBtn) sBtn.textContent = 'Log Entry';
 
       const deleteBtn = document.getElementById('ef-delete-btn');
       if (deleteBtn) deleteBtn.style.display = 'none';
     } else {
       // New entry mode
       const newEvent = {
-        label:        '',
+        label:        aiFields?.label     || '',
         month:        dateVal,
         title:        titleVal,
         desc:         descVal || titleVal,
         delta:        deltaVal,
         positive:     deltaVal >= 0,
         goalAchieved: goalChecked && goalText ? goalText : null,
-        speech:       '',
-        milestone:    '',
-        todo:         '',
+        speech:       aiFields?.speech    || '',
+        milestone:    aiFields?.milestone || '',
+        todo:         aiFields?.todo      || '',
         skillDeltas,
         _custom:      true,
       };
@@ -569,5 +584,29 @@ const EntryFormModule = (() => {
     URL.revokeObjectURL(url);
   }
 
-  return { render, loadSavedEntries, openEdit };
+  // ── Bulk import (used by github.js) ──────────────────────────────────────────
+
+  async function addBulk(eventsArray) {
+    if (!eventsArray || !eventsArray.length) return null;
+
+    // Insert oldest-first so the last insert is the most recent event
+    const sorted = [...eventsArray].sort(
+      (a, b) => new Date(a.month).getTime() - new Date(b.month).getTime()
+    );
+
+    let lastIdx = 0;
+    sorted.forEach(ev => {
+      ev._custom = true;
+      lastIdx = insertChronologically(ev);
+    });
+
+    const savedToFile = await writeToDataFile();
+    if (!savedToFile) persist();
+
+    if (window.rerenderAll) window.rerenderAll(lastIdx);
+
+    return lastIdx;
+  }
+
+  return { render, loadSavedEntries, openEdit, addBulk };
 })();

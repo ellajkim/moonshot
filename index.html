@@ -30,6 +30,8 @@
   <link rel="stylesheet" href="css/companion.css"/>
   <link rel="stylesheet" href="css/ledger.css"/>
   <link rel="stylesheet" href="css/Entryform.css"/>
+  <link rel="stylesheet" href="css/github.css"/>
+  <link rel="stylesheet" href="css/linkedin.css"/>
 </head>
 <body>
 <div id="app">
@@ -48,6 +50,10 @@
 
     <!-- Entry form: "What have you been up to?" -->
     <div id="entry-form-mount"></div>
+    <!-- GitHub activity importer -->
+    <div id="github-import-mount"></div>
+    <!-- LinkedIn positions importer -->
+    <div id="linkedin-import-mount"></div>
 
     <!-- Main grid -->
     <div class="main-grid">
@@ -81,6 +87,8 @@
           <svg id="svg-timeline" viewBox="0 0 480 240" style="height:240px;width:100%;display:block;overflow:visible;"></svg>
           <div id="skills-sidebar" class="skills-sidebar" style="display:none"></div>
         </div>
+        <!-- LinkedIn career Gantt — directly below journey arc, aligned to same x-axis -->
+        <div id="li-gantt" style="display:none"></div>
         <div class="tick-row" id="tick-row"></div>
         <div class="ev-detail" id="ev-detail">
           <div class="ed-header">
@@ -130,7 +138,10 @@
 <script src="js/companion.js"></script>
 <script src="js/event-animation.js"></script>
 <script src="js/ledger.js"></script>
+<script src="js/autofill.js"></script>
 <script src="js/Entryform.js"></script>
+<script src="js/github.js"></script>
+<script src="js/linkedin.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

@@ -1,0 +1,281 @@
+/* css/github.css — GitHub import panel */
+
+.gh-container {
+  margin-bottom: 18px;
+}
+
+/* ── Toggle button ─────────────────────────────────────────────────────────── */
+
+.gh-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(40, 40, 60, .6);
+  border: .5px solid rgba(255, 255, 255, .14);
+  border-radius: 20px;
+  padding: 6px 14px 6px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #8090b0;
+  cursor: pointer;
+  font-family: inherit;
+  margin-bottom: 10px;
+  transition: background .15s, color .15s, border-color .15s;
+}
+
+.gh-toggle:hover {
+  background: rgba(60, 60, 90, .7);
+  color: #c0cae8;
+  border-color: rgba(255, 255, 255, .22);
+}
+
+/* ── Collapsible panel ─────────────────────────────────────────────────────── */
+
+.gh-panel {
+  background: rgba(8, 12, 24, .82);
+  border: .5px solid rgba(255, 255, 255, .13);
+  border-radius: 14px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  padding: 0 18px;
+  transition: max-height .32s ease, padding .32s ease, opacity .2s ease;
+}
+
+.gh-panel.gh-panel-open {
+  max-height: 1200px;
+  overflow: visible;
+  padding: 16px 18px 18px;
+  opacity: 1;
+}
+
+/* ── Input row ─────────────────────────────────────────────────────────────── */
+
+.gh-fields {
+  margin-bottom: 12px;
+}
+
+.gh-field-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.gh-input {
+  background: rgba(255, 255, 255, .05);
+  border: .5px solid rgba(255, 255, 255, .11);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+  color: #e0e4f4;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .15s;
+  min-width: 0;
+  flex: 1;
+}
+
+.gh-input:focus {
+  border-color: rgba(80, 110, 255, .42);
+}
+
+.gh-input::placeholder { color: #505878; }
+
+.gh-input-token { flex: 1.6; }
+
+.gh-fetch-btn {
+  background: rgba(80, 110, 255, .18);
+  border: .5px solid rgba(80, 110, 255, .4);
+  border-radius: 16px;
+  padding: 7px 18px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #c0d0ff;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background .15s;
+  flex-shrink: 0;
+}
+
+.gh-fetch-btn:hover { background: rgba(80, 110, 255, .32); }
+
+.gh-hint-row {
+  font-size: 10.5px;
+  color: #505878;
+  margin-top: 7px;
+  line-height: 1.5;
+}
+
+/* ── Status line ───────────────────────────────────────────────────────────── */
+
+.gh-status {
+  font-size: 11px;
+  color: #90a8b0;
+  min-height: 14px;
+  margin-bottom: 10px;
+}
+
+/* ── Results list ──────────────────────────────────────────────────────────── */
+
+.gh-results {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 420px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, .12) transparent;
+}
+
+.gh-results::-webkit-scrollbar       { width: 4px; }
+.gh-results::-webkit-scrollbar-track { background: transparent; }
+.gh-results::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, .12); border-radius: 4px; }
+
+.gh-result-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(255, 255, 255, .03);
+  border: .5px solid rgba(255, 255, 255, .08);
+  border-radius: 10px;
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background .12s, border-color .12s;
+}
+
+.gh-result-row:hover {
+  background: rgba(255, 255, 255, .055);
+  border-color: rgba(255, 255, 255, .14);
+}
+
+.gh-cb {
+  margin-top: 3px;
+  accent-color: #6080ff;
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.gh-row-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.gh-row-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+
+.gh-row-badge {
+  font-size: 9.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  background: rgba(80, 110, 255, .15);
+  border: .5px solid rgba(80, 110, 255, .3);
+  color: #90a8ff;
+  border-radius: 10px;
+  padding: 2px 7px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.gh-row-date {
+  font-size: 10.5px;
+  color: #505878;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.gh-row-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: #d0d8f0;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gh-row-delta {
+  font-size: 11px;
+  font-weight: 600;
+  color: #50c878;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.gh-row-desc {
+  font-size: 11px;
+  color: #606880;
+  line-height: 1.45;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 5px;
+}
+
+.gh-lang-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.gh-lang-tag {
+  font-size: 10px;
+  font-weight: 500;
+  border: .5px solid transparent;
+  border-radius: 10px;
+  padding: 2px 7px;
+  white-space: nowrap;
+}
+
+/* ── Import actions row ────────────────────────────────────────────────────── */
+
+.gh-import-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.gh-select-btn {
+  background: none;
+  border: .5px solid rgba(255, 255, 255, .12);
+  border-radius: 14px;
+  padding: 5px 12px;
+  font-size: 11px;
+  color: #606880;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color .14s, border-color .14s;
+}
+
+.gh-select-btn:hover {
+  color: #c0cae8;
+  border-color: rgba(255, 255, 255, .24);
+}
+
+.gh-import-btn {
+  background: rgba(80, 200, 120, .14);
+  border: .5px solid rgba(80, 200, 120, .36);
+  border-radius: 16px;
+  padding: 7px 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #80e8a8;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .15s;
+  margin-left: auto;
+}
+
+.gh-import-btn:hover { background: rgba(80, 200, 120, .26); }

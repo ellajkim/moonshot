@@ -38,6 +38,7 @@
     if (_currentMode === 'all') {
       TimelineModule.draw(idx);
       TimelineModule.buildTicks(idx);
+      LinkedInModule.drawGantt();
     } else {
       SkillsTimelineModule.draw(idx);
     }
@@ -173,6 +174,8 @@
   TimelineModule.buildTicks(-1);
   CompanionModule.draw(0, true);
   EntryFormModule.render();
+  GitHubModule.render();
+  LinkedInModule.render();
 
   // Auto-select the first event after a brief paint delay — but if the user
   // submits an entry before this fires, cancel it so their new entry stays
