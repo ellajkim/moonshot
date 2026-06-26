@@ -282,5 +282,11 @@ const TimelineModule = (() => {
     if (vl) vl.setAttribute('display', 'none');
   };
 
-  return { draw, buildTicks, showDetail, cumScores, setFilter, firstActiveOrigIdx, rebuild };
+  function getTimeRange() {
+    if (!activeEvents.length) return null;
+    const ts = activeEvents.map(e => new Date(e.month).getTime());
+    return { minT: Math.min(...ts), maxT: Math.max(...ts) };
+  }
+
+  return { draw, buildTicks, showDetail, cumScores, setFilter, firstActiveOrigIdx, rebuild, getTimeRange };
 })();
