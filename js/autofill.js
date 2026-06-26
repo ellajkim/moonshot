@@ -511,16 +511,98 @@ const AutofillModule = (() => {
     return delta >= 0 ? 'positive' : 'negative';
   }
 
+  // ── Personalized cow speech ───────────────────────────────────────────────────
+
+  function buildPersonalSpeech(title, desc, delta, skillDeltas, category) {
+    const isPositive = delta >= 0;
+
+    // Short title (≤6 words)
+    const words = title.trim().split(/\s+/);
+    const shortTitle = words.slice(0, 6).join(' ') + (words.length > 6 ? '…' : '');
+    const T = `<b>"${shortTitle}"</b>`;
+    const D = `<b>${delta > 0 ? '+' + delta : delta}</b>`;
+
+    // Top 2 positively-gained skills
+    const topSkills = Object.entries(skillDeltas || {})
+      .filter(([, v]) => v > 0)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 2)
+      .map(([key]) => {
+        const s = (typeof SKILLS !== 'undefined' ? SKILLS : []).find(sk => sk.key === key);
+        return `<b>${s ? s.label : key}</b>`;
+      });
+
+    const skillLine = topSkills.length === 0 ? '' :
+      topSkills.length === 1 ? ` ${topSkills[0]} is leveling up.` :
+      ` ${topSkills[0]} & ${topSkills[1]} are leveling up.`;
+
+    const POS = {
+      internship:    [`You landed ${T}! ${D} pts — the résumé gap just closed.${skillLine}`,
+                      `${T} is what all the grinding was for. ${D} pts in the bank.${skillLine}`,
+                      `That offer didn't come from luck — it came from effort. ${T}, ${D} pts.${skillLine}`],
+      deployment:    [`${T} is live. ${D} pts — most people only talk about building things.${skillLine}`,
+                      `Running in production with ${T} changes how people see your work. ${D} pts.${skillLine}`,
+                      `You launched ${T}! ${D} pts and real users incoming.${skillLine}`],
+      project:       [`You shipped ${T}. ${D} pts — real beats imaginary every time.${skillLine}`,
+                      `${T} is out there and it counts. ${D} pts and a portfolio piece you can point to.${skillLine}`,
+                      `Shipping ${T} puts you ahead of everyone still planning. ${D} pts.${skillLine}`],
+      hackathon:     [`${T} under pressure! ${D} pts — a weekend of building beats a semester of planning.${skillLine}`,
+                      `You shipped ${T} on a deadline. ${D} pts of real compressed experience.${skillLine}`],
+      certification: [`${T} earned! ${D} pts — credentials that open the first conversation.${skillLine}`,
+                      `${T} certified. ${D} pts and proof of commitment most skip.${skillLine}`],
+      leadership:    [`${T} — you stepped up. ${D} pts. Leadership this early is rare.${skillLine}`,
+                      `Taking ownership with ${T} is how reputations are built. ${D} pts.${skillLine}`],
+      research:      [`${T} — you're asking better questions now. ${D} pts.${skillLine}`,
+                      `Most students never touch research. ${T} already sets you apart. ${D} pts.${skillLine}`],
+      presentation:  [`You showed your work with ${T}. ${D} pts — communicating well amplifies everything you build.${skillLine}`,
+                      `${T} delivered. ${D} pts. Public speaking compounds over time.${skillLine}`],
+      networking:    [`${T} — one real connection can change the whole trajectory. ${D} pts.${skillLine}`,
+                      `${T} and the network keeps growing. ${D} pts — most opportunities come through people, not portals.${skillLine}`],
+      club:          [`${T} — community accelerates growth more than any solo grind. ${D} pts.${skillLine}`,
+                      `You showed up for ${T}. ${D} pts — the network you build here is yours forever.${skillLine}`],
+      academic:      [`${T} logged. ${D} pts — every milestone on the board is proof of progress.${skillLine}`,
+                      `${T} — ${D} pts and a real academic win to point to.${skillLine}`],
+      commit:        [`${T} pushed. ${D} pts — the habit is everything. The diff is small; the discipline is not.${skillLine}`,
+                      `Another ${T} committed. ${D} pts and the build cadence holds.${skillLine}`],
+      pull_request:  [`${T} merged! ${D} pts — that's how professionals collaborate.${skillLine}`,
+                      `${T} through code review. ${D} pts and a workflow muscle that compounds.${skillLine}`],
+      repo_created:  [`${T} initialized. ${D} pts — ideas are free, repos with code in them are rare.${skillLine}`,
+                      `A blank ${T} full of potential. ${D} pts — make the first push count.${skillLine}`],
+      positive:      [`${T} — ${D} pts of proof. Progress compounds.${skillLine}`,
+                      `You logged ${T}. ${D} pts — every step forward matters more than it looks.${skillLine}`,
+                      `${D} points for ${T}. Small wins stack into something real.${skillLine}`],
+    };
+
+    const NEG = {
+      rejection:  [`${T} — a door closed. That just means you're looking for the right one. ${D} pts.`,
+                   `${T} stings. But it's data, not a verdict. ${D} pts — what do you do differently next time?`,
+                   `Every ${T} brings you one step closer to the yes that actually fits. ${D} pts.`],
+      academic:   [`${T} is feedback, not identity. ${D} pts — what does it tell you to fix?`,
+                   `${T} is a hard chapter, not the whole book. ${D} pts — go to office hours.`],
+      negative:   [`${T} logged. ${D} pts — it takes honesty to write this down. What's the one thing to fix?`,
+                   `${D} pts on ${T}. Every great journey has hard chapters. What happens next is the story.`,
+                   `Logging ${T} honestly already puts you ahead. ${D} pts — regroup and come back swinging. 🐄`],
+    };
+
+    if (isPositive) {
+      const bucket = POS[category] || POS.positive;
+      return pick(bucket, title + desc);
+    } else {
+      const bucket = NEG[category] || NEG.negative;
+      return pick(bucket, title + desc);
+    }
+  }
+
   // ── Public API ────────────────────────────────────────────────────────────────
 
-  function generate(title, desc, delta) {
+  function generate(title, desc, delta, skillDeltas) {
     const category = detectCategory(title, desc, delta);
     const bucket   = BANK[category];
     const seed     = title + desc;
 
     return {
       label:     generateLabel(title),
-      speech:    pick(bucket.speech,     seed),
+      speech:    buildPersonalSpeech(title, desc, delta, skillDeltas, category),
       milestone: pick(bucket.milestone,  seed + 'm'),
       todo:      pick(bucket.todo,       seed + 't'),
     };
