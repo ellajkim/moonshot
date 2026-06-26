@@ -173,6 +173,7 @@
   TimelineModule.buildTicks(-1);
   CompanionModule.draw(0, true);
   EntryFormModule.render();
+  if (typeof GoalsModule !== 'undefined') GoalsModule.init();
 
   // Auto-select the first event after a brief paint delay — but if the user
   // submits an entry before this fires, cancel it so their new entry stays

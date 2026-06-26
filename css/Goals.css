@@ -1,0 +1,164 @@
+/* css/goals.css — goals checklist card */
+
+.goals-card {
+  background: rgba(255, 255, 255, .04);
+  border: .5px solid rgba(255, 255, 255, .08);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.goals-ttl {
+  font-size: 10px;
+  color: #404868;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 8px;
+}
+
+.goals-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 10px;
+  max-height: 111px; /* shows ~3 goals; scroll for more */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(80, 110, 255, .25) transparent;
+}
+
+.goals-list::-webkit-scrollbar { width: 3px; }
+.goals-list::-webkit-scrollbar-track { background: transparent; }
+.goals-list::-webkit-scrollbar-thumb {
+  background: rgba(80, 110, 255, .25);
+  border-radius: 2px;
+}
+.goals-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(80, 110, 255, .45);
+}
+
+.goal-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: #8090c0;
+  padding-bottom: 7px;
+  border-bottom: .5px solid rgba(255, 255, 255, .05);
+}
+
+.goal-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.goal-check {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  border: .5px solid rgba(255, 255, 255, .2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  line-height: 1;
+  color: #50c878;
+  flex-shrink: 0;
+}
+
+.goal-item.done .goal-check {
+  background: rgba(80, 200, 120, .15);
+  border-color: rgba(80, 200, 120, .4);
+}
+
+.goal-text {
+  flex: 1;
+}
+
+.goal-item.done .goal-text {
+  text-decoration: line-through;
+  color: #506090;
+}
+
+.goal-progress {
+  font-size: 9px;
+  color: #607098;
+  background: rgba(255, 255, 255, .05);
+  border-radius: 10px;
+  padding: 1px 7px;
+  flex-shrink: 0;
+}
+
+.goal-del {
+  background: none;
+  border: none;
+  color: #404868;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0 2px;
+  flex-shrink: 0;
+}
+
+.goal-del:hover {
+  color: #c05050;
+}
+
+.goal-empty {
+  font-size: 10px;
+  color: #404868;
+  font-style: italic;
+}
+
+.goal-add-row {
+  display: flex;
+  gap: 6px;
+}
+
+.goal-add-row input {
+  flex: 1;
+  background: rgba(255, 255, 255, .03);
+  border: .5px solid rgba(255, 255, 255, .1);
+  border-radius: 8px;
+  padding: 6px 9px;
+  font-size: 11px;
+  color: #d0d8f4;
+  font-family: inherit;
+}
+
+.goal-add-row input::placeholder {
+  color: #404868;
+}
+
+.goal-add-row input:focus {
+  outline: none;
+  border-color: rgba(80, 110, 255, .5);
+}
+
+.goal-add-btn {
+  background: rgba(80, 110, 255, .18);
+  border: .5px solid rgba(80, 110, 255, .4);
+  border-radius: 8px;
+  width: 30px;
+  flex-shrink: 0;
+  color: #c0d0ff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background .15s;
+}
+
+.goal-add-btn:hover {
+  background: rgba(80, 110, 255, .3);
+}
+
+/* Streak badge on escalated goals */
+.goal-streak {
+  font-size: 9px;
+  color: #e08030;
+  background: rgba(224, 128, 48, .12);
+  border: .5px solid rgba(224, 128, 48, .3);
+  border-radius: 10px;
+  padding: 1px 6px;
+  flex-shrink: 0;
+  letter-spacing: .03em;
+}
