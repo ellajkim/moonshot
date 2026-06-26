@@ -54,20 +54,109 @@
 }
 
 .speech {
-  background: rgba(80, 100, 255, .1);
-  border: .5px solid rgba(80, 100, 255, .2);
-  border-radius: 8px;
-  padding: 8px 10px;
-  font-size: 11px;
-  color: #8898c8;
-  line-height: 1.5;
+  position: relative;
+  background: linear-gradient(145deg, rgba(14, 8, 38, 0.97), rgba(8, 18, 52, 0.97));
+  border: 1.5px solid rgba(100, 130, 255, 0.35);
+  border-radius: 10px;
+  padding: 11px 13px 11px;
+  margin-top: 14px;
+  font-size: 11.5px;
+  color: #b8caf0;
+  line-height: 1.65;
   text-align: left;
-  min-height: 48px;
+  min-height: 52px;
+  transition: border-color 0.45s ease, box-shadow 0.45s ease, background 0.45s ease;
 }
 
+/* Speech bubble tail — triangle pointing up toward the cow */
+.speech::before {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 0 solid transparent;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 9px solid rgba(100, 130, 255, 0.35);
+  transition: border-bottom-color 0.45s ease;
+}
+
+/* Inner fill of the tail (matches bubble background) */
+.speech::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 0 solid transparent;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 7px solid rgb(11, 13, 42);
+}
+
+/* ── Positive state — warm gold glow ── */
+.speech.speech-pos {
+  border-color: rgba(255, 200, 50, 0.55);
+  box-shadow: 0 0 22px rgba(255, 185, 30, 0.14), inset 0 0 28px rgba(255, 185, 30, 0.05);
+  background: linear-gradient(145deg, rgba(22, 14, 4, 0.97), rgba(10, 20, 45, 0.97));
+}
+
+.speech.speech-pos::before {
+  border-bottom-color: rgba(255, 200, 50, 0.55);
+}
+
+.speech.speech-pos b {
+  color: #ffd060;
+  font-weight: 700;
+  text-shadow: 0 0 12px rgba(255, 195, 40, 0.6);
+}
+
+/* ── Negative state — cool purple glow ── */
+.speech.speech-neg {
+  border-color: rgba(170, 100, 255, 0.5);
+  box-shadow: 0 0 22px rgba(150, 80, 255, 0.13), inset 0 0 28px rgba(150, 80, 255, 0.06);
+  background: linear-gradient(145deg, rgba(14, 6, 32, 0.97), rgba(8, 12, 50, 0.97));
+}
+
+.speech.speech-neg::before {
+  border-bottom-color: rgba(170, 100, 255, 0.5);
+}
+
+.speech.speech-neg b {
+  color: #c090ff;
+  font-weight: 700;
+  text-shadow: 0 0 12px rgba(180, 110, 255, 0.6);
+}
+
+/* Default bold (before sentiment class is applied) */
 .speech b {
   color: #a8c0ff;
-  font-weight: 500;
+  font-weight: 600;
+}
+
+/* ── Pop-in animation when speech updates ── */
+@keyframes speech-pop {
+  0%   { opacity: 0; transform: translateY(8px) scale(0.96); }
+  60%  { opacity: 1; transform: translateY(-2px) scale(1.01); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.speech.speech-pop {
+  animation: speech-pop 0.42s cubic-bezier(0.34, 1.4, 0.64, 1) forwards;
+}
+
+/* ── Cow bounce when speaking ── */
+@keyframes cow-speak {
+  0%   { transform: scale(1)    rotate(0deg); }
+  25%  { transform: scale(1.07) rotate(-3deg); }
+  55%  { transform: scale(1.04) rotate(2deg); }
+  80%  { transform: scale(1.01) rotate(-1deg); }
+  100% { transform: scale(1)    rotate(0deg); }
+}
+
+.tama-img-el.cow-speaking {
+  animation: cow-speak 0.55s cubic-bezier(0.34, 1.3, 0.64, 1) forwards;
 }
 
 /* ── Event achievement animation ── */
@@ -190,3 +279,4 @@
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+

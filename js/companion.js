@@ -30,7 +30,27 @@ const CompanionModule = (() => {
     document.getElementById('tama-level').textContent = LEVELS[clampedLevel];
     document.getElementById('sbar-fill').style.width  = scorePercent + '%';
     document.getElementById('sbar-pct').textContent   = scorePercent + '%';
-    document.getElementById('speech').innerHTML       = EVENTS[idx].speech;
+
+    const speechEl = document.getElementById('speech');
+    speechEl.innerHTML = EVENTS[idx].speech || 'Moo…';
+
+    // Color the bubble based on sentiment
+    speechEl.classList.remove('speech-pos', 'speech-neg');
+    speechEl.classList.add(positive ? 'speech-pos' : 'speech-neg');
+
+    // Animate: re-trigger by removing then re-adding the class
+    speechEl.classList.remove('speech-pop');
+    void speechEl.offsetWidth; // force reflow
+    speechEl.classList.add('speech-pop');
+
+    // Bounce the cow to look like it's speaking (only for positive — neg has rotate(90deg) inline)
+    if (positive) {
+      const img = document.getElementById('tama-img');
+      img.classList.remove('cow-speaking');
+      void img.offsetWidth;
+      img.classList.add('cow-speaking');
+    }
+
     draw(clampedLevel, positive);
   }
 
