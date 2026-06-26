@@ -84,5 +84,5 @@ body {
 .right-panel {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 18px;
 }
