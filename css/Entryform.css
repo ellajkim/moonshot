@@ -1,0 +1,514 @@
+/* css/Entryform.css — rich entry form */
+
+/* ── Container & toggle ────────────────────────────────────────────────────── */
+
+.ef-container {
+  margin-bottom: 18px;
+}
+
+.ef-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(80, 110, 255, .1);
+  border: .5px solid rgba(80, 110, 255, .28);
+  border-radius: 20px;
+  padding: 6px 14px 6px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #90a8ff;
+  cursor: pointer;
+  font-family: inherit;
+  margin-bottom: 10px;
+  transition: background .15s, border-color .15s;
+}
+
+.ef-toggle:hover {
+  background: rgba(80, 110, 255, .2);
+}
+
+.ef-toggle-icon {
+  transition: transform .2s;
+  flex-shrink: 0;
+}
+
+/* ── Collapsible panel ─────────────────────────────────────────────────────── */
+
+.ef-panel {
+  background: rgba(8, 12, 24, .82);
+  border: .5px solid rgba(255, 255, 255, .13);
+  border-radius: 14px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .32s ease, padding .32s ease, opacity .2s ease;
+  opacity: 0;
+  padding: 0 18px;
+}
+
+.ef-panel.ef-panel-open {
+  max-height: 700px;
+  overflow: visible;
+  padding: 16px 18px 18px;
+  opacity: 1;
+}
+
+/* ── Layout helpers ────────────────────────────────────────────────────────── */
+
+.ef-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ef-row > .ef-field {
+  margin-bottom: 0;
+}
+
+.ef-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 12px;
+}
+
+.ef-field-grow { flex: 1; }
+
+/* ── Labels ────────────────────────────────────────────────────────────────── */
+
+.ef-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: #707898;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+}
+
+/* ── Text / date / number inputs ───────────────────────────────────────────── */
+
+.ef-input-field {
+  background: rgba(255, 255, 255, .05);
+  border: .5px solid rgba(255, 255, 255, .11);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+  color: #e0e4f4;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .15s;
+}
+
+.ef-input-field:focus {
+  border-color: rgba(80, 110, 255, .42);
+}
+
+.ef-input-field::placeholder { color: #505878; }
+
+.ef-input-field[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(.45) brightness(1.4);
+  cursor: pointer;
+}
+
+.ef-textarea {
+  background: rgba(255, 255, 255, .05);
+  border: .5px solid rgba(255, 255, 255, .11);
+  border-radius: 8px;
+  padding: 7px 10px;
+  font-size: 12px;
+  color: #e0e4f4;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+  min-height: 54px;
+  width: 100%;
+  transition: border-color .15s;
+}
+
+.ef-textarea:focus { border-color: rgba(80, 110, 255, .42); }
+.ef-textarea::placeholder { color: #505878; }
+
+.ef-number { width: 90px; }
+
+/* ── Skills area ───────────────────────────────────────────────────────────── */
+
+.ef-skills-area {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  background: rgba(255, 255, 255, .028);
+  border: .5px solid rgba(255, 255, 255, .08);
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+
+.ef-skill-tags {
+  display: contents; /* tags sit directly in the flex parent */
+}
+
+/* Discord-style role tag */
+.ef-skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, .07);
+  border: .5px solid rgba(255, 255, 255, .12);
+  border-radius: 20px;
+  padding: 3px 6px 3px 8px;
+  font-size: 11px;
+  color: #c0cae8;
+}
+
+.ef-skill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: inline-block;
+}
+
+.ef-skill-name {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.ef-skill-delta-input {
+  width: 44px;
+  background: rgba(0, 0, 0, .28);
+  border: .5px solid rgba(255, 255, 255, .1);
+  border-radius: 6px;
+  padding: 2px 4px;
+  font-size: 11px;
+  color: #e0e4f4;
+  font-family: inherit;
+  outline: none;
+  text-align: center;
+  transition: border-color .15s;
+}
+
+.ef-skill-delta-input:focus { border-color: rgba(80, 110, 255, .4); }
+
+/* hide spin arrows */
+.ef-skill-delta-input::-webkit-inner-spin-button,
+.ef-skill-delta-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.ef-skill-delta-input { -moz-appearance: textfield; }
+
+.ef-skill-remove {
+  background: none;
+  border: none;
+  color: #5a6280;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  padding: 0 2px;
+  transition: color .12s;
+}
+
+.ef-skill-remove:hover { color: #c06060; }
+
+/* ── Add-skill button & dropdown ───────────────────────────────────────────── */
+
+.ef-skill-add-wrap { position: relative; }
+
+.ef-add-skill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(80, 110, 255, .09);
+  border: .5px solid rgba(80, 110, 255, .28);
+  border-radius: 16px;
+  padding: 4px 11px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #90a8ff;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .14s;
+  white-space: nowrap;
+}
+
+.ef-add-skill-btn:hover { background: rgba(80, 110, 255, .2); }
+
+.ef-skill-dropdown {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  z-index: 200;
+  background: #111827;
+  border: .5px solid rgba(255, 255, 255, .13);
+  border-radius: 10px;
+  padding: 4px;
+  min-width: 130px;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .55);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, .15) transparent;
+}
+
+.ef-skill-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ef-skill-dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ef-skill-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, .15);
+  border-radius: 4px;
+}
+
+.ef-dropdown-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #c0cae8;
+  transition: background .1s;
+}
+
+.ef-dropdown-opt:hover { background: rgba(255, 255, 255, .07); }
+
+.ef-dropdown-empty {
+  padding: 8px 12px;
+  font-size: 11px;
+  color: #505878;
+}
+
+.ef-dropdown-divider {
+  height: .5px;
+  background: rgba(255, 255, 255, .1);
+  margin: 4px 6px;
+}
+
+.ef-dropdown-create {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #90a8ff;
+  transition: background .1s;
+}
+
+.ef-dropdown-create:hover { background: rgba(80, 110, 255, .1); }
+
+/* Inline new-skill form inside the dropdown */
+.ef-new-skill-form {
+  padding: 6px 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ef-new-skill-back {
+  background: none;
+  border: none;
+  color: #707898;
+  font-size: 11px;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  padding: 2px 4px;
+  border-radius: 5px;
+  transition: color .12s;
+  align-self: flex-start;
+}
+
+.ef-new-skill-back:hover { color: #c0cae8; }
+
+.ef-new-skill-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.ef-new-skill-name {
+  flex: 1;
+  background: rgba(255, 255, 255, .06);
+  border: .5px solid rgba(255, 255, 255, .13);
+  border-radius: 7px;
+  padding: 5px 8px;
+  font-size: 12px;
+  color: #e0e4f4;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .15s;
+  min-width: 0;
+}
+
+.ef-new-skill-name:focus { border-color: rgba(80, 110, 255, .42); }
+.ef-new-skill-name::placeholder { color: #505878; }
+
+.ef-new-skill-color {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 6px;
+  padding: 2px;
+  background: rgba(255, 255, 255, .06);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.ef-new-skill-color::-webkit-color-swatch-wrapper { padding: 0; }
+.ef-new-skill-color::-webkit-color-swatch { border: none; border-radius: 4px; }
+
+.ef-new-skill-submit {
+  background: rgba(80, 110, 255, .18);
+  border: .5px solid rgba(80, 110, 255, .38);
+  border-radius: 12px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #c0d0ff;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .14s;
+  align-self: flex-start;
+}
+
+.ef-new-skill-submit:hover { background: rgba(80, 110, 255, .32); }
+
+/* ── Goal achieved row ─────────────────────────────────────────────────────── */
+
+.ef-goal-row {
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.ef-label-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+  font-size: 12px;
+  color: #c0cae8;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.ef-label-checkbox input[type="checkbox"] {
+  accent-color: #6080ff;
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}
+
+.ef-goal-text {
+  flex: 1;
+  min-width: 150px;
+  display: none;
+}
+
+.ef-goal-text.ef-goal-text-visible { display: block; }
+
+/* ── Actions row ───────────────────────────────────────────────────────────── */
+
+.ef-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.ef-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: .5px solid rgba(255, 255, 255, .12);
+  border-radius: 16px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #606880;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color .15s, border-color .15s, background .15s;
+  white-space: nowrap;
+}
+
+.ef-link-btn:hover {
+  color: #90a8ff;
+  border-color: rgba(80, 110, 255, .3);
+  background: rgba(80, 110, 255, .06);
+}
+
+.ef-link-btn-linked {
+  color: #50c878 !important;
+  border-color: rgba(80, 200, 120, .3) !important;
+  background: rgba(80, 200, 120, .06) !important;
+}
+
+.ef-link-btn-error {
+  color: #c06060 !important;
+  border-color: rgba(200, 80, 80, .3) !important;
+}
+
+.ef-go {
+  background: rgba(80, 110, 255, .2);
+  border: .5px solid rgba(80, 110, 255, .42);
+  border-radius: 16px;
+  padding: 7px 20px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #c0d0ff;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .15s;
+}
+
+.ef-go:hover { background: rgba(80, 110, 255, .34); }
+
+.ef-delete-btn {
+  background: rgba(200, 60, 60, .12);
+  border: .5px solid rgba(200, 60, 60, .35);
+  border-radius: 16px;
+  padding: 7px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #e08888;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background .15s, color .15s;
+}
+
+.ef-delete-btn:hover {
+  background: rgba(200, 60, 60, .28);
+  color: #ffaaaa;
+}
+
+.ef-icon-btn {
+  background: none;
+  border: none;
+  color: #505878;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-radius: 8px;
+  transition: color .15s, background .15s;
+}
+
+.ef-icon-btn:hover {
+  color: #90a8ff;
+  background: rgba(255, 255, 255, .06);
+}
+
+/* ── Hint text ─────────────────────────────────────────────────────────────── */
+
+.ef-hint {
+  font-size: 11px;
+  color: #50c878;
+  margin-top: 10px;
+  min-height: 14px;
+}

@@ -42,20 +42,19 @@ body {
   margin-bottom: 20px;
 }
 
-.hdr-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: #4060d0;
-  box-shadow: 0 0 8px #4060d0;
+.hdr-cow {
+  height: 44px;
+  width: auto;
   flex-shrink: 0;
+  transform: scaleX(-1);
 }
 
 .hdr-title {
-  font-size: 13px;
-  font-weight: 500;
-  color: #b0bce0;
-  letter-spacing: .07em;
-  text-transform: uppercase;
+  font-family: 'Silkscreen', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: .04em;
 }
 
 .score-pill {
@@ -71,9 +70,15 @@ body {
 /* Main grid */
 .main-grid {
   display: grid;
-  grid-template-columns: 1fr 210px;
+  grid-template-columns: 1fr 300px;
   gap: 18px;
   align-items: start;
+}
+
+.left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
 .right-panel {

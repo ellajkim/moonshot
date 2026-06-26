@@ -1,8 +1,8 @@
 /* css/skills.css — donut chart section */
 
 .skills-section {
-  background: rgba(255, 255, 255, .03);
-  border: .5px solid rgba(255, 255, 255, .07);
+  background: rgba(8, 12, 24, .82);
+  border: .5px solid rgba(255, 255, 255, .13);
   border-radius: 12px;
   padding: 16px 20px;
   margin-bottom: 18px;
@@ -77,4 +77,13 @@
   color: #607098;
   letter-spacing: .04em;
   text-transform: uppercase;
+}
+
+/* Shown in the donut center when skill hits 100% */
+.donut-moon {
+  width: 26px;
+  height: 26px;
+  -webkit-mask: url(../images/moon.png) center / contain no-repeat;
+  mask: url(../images/moon.png) center / contain no-repeat;
+  image-rendering: pixelated;
 }

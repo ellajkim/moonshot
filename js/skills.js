@@ -64,7 +64,13 @@ const SkillsModule = (() => {
       const ring   = document.getElementById('donut-' + s.key);
       const label  = document.getElementById('donut-label-' + s.key);
       if (ring)  ring.style.strokeDashoffset = offset;
-      if (label) label.innerHTML = `${pct}%<span>${s.label}</span>`;
+      if (label) {
+        if (pct >= 100) {
+          label.innerHTML = `<div class="donut-moon" style="background-color:${s.color}"></div>`;
+        } else {
+          label.innerHTML = `${pct}%<span>${s.label}</span>`;
+        }
+      }
     });
   }
 

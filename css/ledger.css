@@ -1,8 +1,8 @@
 /* css/ledger.css — journey log card */
 
 .ledger-card {
-  background: rgba(255, 255, 255, .04);
-  border: .5px solid rgba(255, 255, 255, .08);
+  background: rgba(8, 12, 24, .82);
+  border: .5px solid rgba(255, 255, 255, .13);
   border-radius: 12px;
   padding: 12px 14px;
   max-height: 280px;

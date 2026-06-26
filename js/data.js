@@ -38,7 +38,7 @@ const SKILLS = [
 const EVENTS = [
   {
     label: 'Start',
-    month: "Aug '24",
+    month: "2025-08-15",
     title: 'First day of college',
     desc: 'Moved into dorms at Northeastern. Overwhelmed but excited. No idea what CS even meant.',
     delta: 5,
@@ -51,7 +51,7 @@ const EVENTS = [
   },
   {
     label: 'Club',
-    month: "Sep '24",
+    month: "2025-09-01",
     title: 'Joined Data Club & AI Club',
     desc: 'Signed up during club fair. Felt like an imposter surrounded by upperclassmen.',
     delta: 8,
@@ -64,7 +64,7 @@ const EVENTS = [
   },
   {
     label: 'Fail',
-    month: "Oct '24",
+    month: "2025-10-04",
     title: 'Failed first algorithms quiz',
     desc: "Bombed the recursion section. Spent a week feeling like I didn't belong in CS.",
     delta: -12,
@@ -77,7 +77,7 @@ const EVENTS = [
   },
   {
     label: 'Project',
-    month: "Nov '24",
+    month: "2025-11-01",
     title: 'Built first Python project',
     desc: 'A simple stock price fetcher using yfinance. Ugly code but it worked. Sent it to 3 friends.',
     delta: 15,
@@ -90,7 +90,7 @@ const EVENTS = [
   },
   {
     label: 'Cert',
-    month: "Dec '24",
+    month: "2025-12-01",
     title: 'Passed Bloomberg BMC',
     desc: 'Grinded Bloomberg Market Concepts over winter break. Took 3 tries on currencies.',
     delta: 10,
@@ -103,7 +103,7 @@ const EVENTS = [
   },
   {
     label: 'Reject',
-    month: "Jan '25",
+    month: "2026-01-01",
     title: 'Rejected from 14 internships',
     desc: 'Applied to Microsoft Explore, NVIDIA Ignite, and 12 others. All automated rejections.',
     delta: -18,
@@ -116,7 +116,7 @@ const EVENTS = [
   },
   {
     label: 'Akuna',
-    month: "Feb '25",
+    month: "2026-02-01",
     title: 'Completed Akuna Options 101',
     desc: 'Finally understood put/call options and the Greeks. Connected it to the quant track.',
     delta: 8,
@@ -129,7 +129,7 @@ const EVENTS = [
   },
   {
     label: 'Quant',
-    month: "Mar '25",
+    month: "2026-03-01",
     title: 'Joined FinTech quant team',
     desc: 'Cold emailed the Disrupt FinTech president. Got onto a 15-person team covering stat arb.',
     delta: 20,
@@ -142,7 +142,7 @@ const EVENTS = [
   },
   {
     label: 'Lead',
-    month: "Apr '25",
+    month: "2026-04-01",
     title: 'Became Data Club Tech Lead',
     desc: 'Proposed and got approved to lead an ML classification project on Fed rate impacts.',
     delta: 18,
@@ -155,7 +155,7 @@ const EVENTS = [
   },
   {
     label: 'Deploy',
-    month: "May '25",
+    month: "2026-05-01",
     title: 'Fed Rate ML model live',
     desc: 'Gradient Boosting model (F1=0.661) deployed to Streamlit Cloud. 3 weeks, team of 4.',
     delta: 22,
@@ -168,7 +168,7 @@ const EVENTS = [
   },
   {
     label: 'Intern',
-    month: "Jun '25",
+    month: "2026-06-01",
     title: 'Secured Checkit Analytics internship',
     desc: 'Cold pitched Yi Wang with two feature ideas. Got the role without applying through a portal.',
     delta: 30,
@@ -181,7 +181,7 @@ const EVENTS = [
   },
   {
     label: 'NLP',
-    month: "Jul '25",
+    month: "2026-07-01",
     title: 'Reddit Sentiment Analyzer ships',
     desc: 'FastAPI + Next.js app using DistilRoBERTa for financial sentiment. Running on real data at Checkit.',
     delta: 25,

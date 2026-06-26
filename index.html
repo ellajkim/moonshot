@@ -3,57 +3,106 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Proof-of-Skill Ledger</title>
+  <title>Moonshot</title>
+  <link rel="icon" type="image/png" id="favicon" href="images/cow.png"/>
+  <script>
+    (function () {
+      var img = new Image();
+      img.onload = function () {
+        var S = 64;
+        var c = document.createElement('canvas');
+        c.width = c.height = S;
+        var ctx = c.getContext('2d');
+        var scale = Math.min(S / img.width, S / img.height);
+        var w = img.width * scale, h = img.height * scale;
+        ctx.drawImage(img, (S - w) / 2, (S - h) / 2, w, h);
+        document.getElementById('favicon').href = c.toDataURL('image/png');
+      };
+      img.src = 'images/cow.png';
+    })();
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link rel="stylesheet" href="css/intro.css"/>
   <link rel="stylesheet" href="css/base.css"/>
   <link rel="stylesheet" href="css/skills.css"/>
   <link rel="stylesheet" href="css/timeline.css"/>
   <link rel="stylesheet" href="css/companion.css"/>
   <link rel="stylesheet" href="css/ledger.css"/>
+  <link rel="stylesheet" href="css/Entryform.css"/>
 </head>
 <body>
 <div id="app">
 
   <!-- Star field (rendered by stars.js) -->
-  <svg id="stars-svg" class="stars" preserveAspectRatio="xMidYMid slice"
-       xmlns="http://www.w3.org/2000/svg"></svg>
+  <div id="stars-bg" class="stars"></div>
 
   <div class="content">
 
     <!-- Header -->
     <div class="hdr">
-      <div class="hdr-dot"></div>
-      <div class="hdr-title">Proof-of-Skill Ledger</div>
+      <img class="hdr-cow" src="images/cow.png" alt="">
+      <div class="hdr-title">Moonshot</div>
       <div class="score-pill" id="score-pill">Score: 0</div>
     </div>
 
-    <!-- Skill Donuts -->
-    <section class="skills-section">
-      <div class="skills-header">Skill growth — updates with each milestone</div>
-      <div class="skills-grid" id="skills-grid"></div>
-    </section>
+    <!-- Entry form: "What have you been up to?" -->
+    <div id="entry-form-mount"></div>
 
     <!-- Main grid -->
     <div class="main-grid">
 
+      <!-- Left column: skills + timeline -->
+      <div class="left-col">
+
+      <!-- Skill Donuts -->
+      <section class="skills-section">
+        <div class="skills-header">Skill growth — updates with each milestone</div>
+        <div class="skills-grid" id="skills-grid"></div>
+      </section>
+
       <!-- Timeline -->
       <div class="timeline-col">
-        <div class="tl-label">Journey arc — click any point to explore</div>
-        <svg id="svg-timeline" viewBox="0 0 480 180" style="height:180px;width:100%;display:block;overflow:visible;"></svg>
+        <div class="tl-header">
+          <div class="tl-label" id="tl-label">Journey arc — hover any point to explore</div>
+          <div class="tl-controls">
+            <select id="graph-mode" class="time-filter">
+              <option value="all">All</option>
+              <option value="skills">By skill</option>
+            </select>
+            <select id="time-filter" class="time-filter">
+              <option value="all">All time</option>
+              <option value="year">Past year</option>
+              <option value="month">Past month</option>
+            </select>
+          </div>
+        </div>
+        <div class="tl-svg-row">
+          <svg id="svg-timeline" viewBox="0 0 480 240" style="height:240px;width:100%;display:block;overflow:visible;"></svg>
+          <div id="skills-sidebar" class="skills-sidebar" style="display:none"></div>
+        </div>
         <div class="tick-row" id="tick-row"></div>
         <div class="ev-detail" id="ev-detail">
-          <div class="ed-month" id="ed-month"></div>
-          <div class="ed-title" id="ed-title-el"></div>
+          <div class="ed-header">
+            <div>
+              <div class="ed-month" id="ed-month"></div>
+              <div class="ed-title" id="ed-title-el"></div>
+            </div>
+            <button type="button" class="ed-edit-btn" id="ed-edit-btn">Edit</button>
+          </div>
           <div class="ed-desc"  id="ed-desc"></div>
           <div class="ed-delta" id="ed-delta"></div>
           <div id="ed-goal"></div>
         </div>
       </div>
 
+      </div><!-- /.left-col -->
+
       <!-- Right panel -->
       <div class="right-panel">
         <div class="companion" id="companion-card">
           <div class="tama-level" id="tama-level">Egg</div>
-          <svg id="tama-svg" class="tama-svg-el" viewBox="0 0 72 72" xmlns="http://www.w3.org/2000/svg"></svg>
+          <img id="tama-img" class="tama-img-el" src="images/babycow.png" alt="companion"/>
           <div class="sbar">
             <div class="sbar-track"><div class="sbar-fill" id="sbar-fill"></div></div>
             <div class="sbar-pct" id="sbar-pct">0%</div>
@@ -70,13 +119,18 @@
   </div>
 </div>
 
+<!-- Intro runs first, overlays the dashboard until the animation completes -->
+<script src="js/intro.js"></script>
 <!-- Data first, then modules, then app entry -->
 <script src="js/data.js"></script>
 <script src="js/stars.js"></script>
 <script src="js/skills.js"></script>
 <script src="js/timeline.js"></script>
+<script src="js/skills-timeline.js"></script>
 <script src="js/companion.js"></script>
+<script src="js/event-animation.js"></script>
 <script src="js/ledger.js"></script>
+<script src="js/Entryform.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
